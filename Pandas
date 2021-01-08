@@ -1,0 +1,96 @@
+import pandas as pd
+df = pd.read_extension(file_name or file_location) 
+i.e. df = pd.read_csv(clean_df.csv) *use ../ to navigate one directory up* ../../ for 2 etc.*
+
+df.dtypes
+df.columns
+
+
+or from url:
+url = "https://url.link"
+df = pd.read_csv(url, header = )
+pdf.DataFrame(df)
+
+headers = [elements,]
+df.columns - headers
+
+df.head(x), df.tail(x) # have a look at the data 
+
+replace x with y 
+df.replace('x', 'y', inplace=True) #inplace = True ensure the df is mutated
+
+replacing missing values:
+import numpy as np 
+df.replace('missing_value_synax', np.nan, inplace = True)
+
+or checking for missing data:
+missing_data = df.isnull()
+missing_data.head(x)
+
+check how many instances of missing data in a column:
+
+for column in missing_data.columns.values.tolist():
+  print(column)
+  print(missing_data[column].value_counts())
+  
+working out the average of a column
+avg_column = df["column"].astype("float").mean(axis=0) 
+print(f"Average of {column}: {avg_column}")
+
+replacing missing data with avg:
+df["column"].replace(np.nan, avg_column, inplace = True)
+
+for non-numerical data, can replace with mode:
+df["column"].value_counts() .idxmax() #idxmax gives mode explicitly
+df["column"].replace(np.nan, "mode", inplace = True)
+
+
+rename a column or columns:
+df.rename(columns={'originalname':'new_name'}, inplace = True)
+
+get max value:
+dff["column"].max()
+
+scaling/normalising:
+  simple feature scaling:
+  df["column"] = df["column"]/df["column"].max()
+  
+  
+plotting:
+%matplotlib inline
+pyplot.hist(df["column"])
+pyplot.xlabel("x_label_name")
+pyplot.ylabel("y_label_name")
+pyplot.title("title")
+
+creating bins:
+bins = np.linspace(min(df["column"]), max(df["column"]), intvalueofbins)
+e.g. bin_names = ["Low", "Medium", "High"]
+df["column-binned"] = pd.cut(df["column"], bins, labels = bin_names, include_lowest = True)
+
+bar chart:
+%matplotlib inline
+pyplot.bar(bin_names, df["columns-binned"].value_counts())
+pyplot.xlabel("x_label_name")
+pyplot.ylabel("count")
+pyplot.title("title")
+
+histogram:
+%matplotlib inline
+pyplot.hist(df["column"], bins = 3)
+pyplot.xlabel("x_label_name")
+pyplot.ylabel("y_label"name")
+pyplot.title("title")
+
+splitting classification data for later purposes:
+dummy_variable_1 = pd.get_dummies(df["classification_column"])
+dummy_variable_1.rename(columns = {"column_default_name": "desired_column_name_1", "column_default_name_2": "desired_column_name_2"}, inplace = True)
+
+concatenate dataframe with new columns:
+df = pd.concat(df, dummy_variable_1], axis = 1)
+
+drop original column if necessary:
+df.drop("classification_column", axis= 1, inplace=True)
+
+save data to csv:
+df.to_csv("new_df_name.csv")
